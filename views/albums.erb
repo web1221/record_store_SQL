@@ -1,0 +1,20 @@
+<h3><center>Album Search</center></h3>
+<form action="/albums">
+  <div class="form-group">
+    <input id="search" name="search" class="form-control bg-success" type="text">
+  </div>
+  <button type="submit" class="btn btn-primary">Go!</button>
+</form>
+
+<h3><center>Available Records</center></h3>
+<% if @albums.any? %>
+<ul>
+  <% @albums.each do |album| %>
+  <li><a href="/albums/<%= album.id %>"><strong><%= album.name %>:</strong> <%= album.status %></a></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are currently no records to display.</p>
+<% end %>
+
+<a href="/albums/new">Add a new album</a>
