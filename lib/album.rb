@@ -12,7 +12,6 @@ class Album
   end
 
   def self.all()
-    # @@albums.values().sort { |a, b| a.name.downcase <=> b.name.downcase }
     returned_albums = DB.exec("SELECT * FROM albums;")
     albums = []
     returned_albums.each() do |album|
@@ -24,7 +23,7 @@ class Album
       status = album.fetch("status")
       albums.push(Album.new({:name => name, :id => id, :year => year, :genre => genre, :artist => artist, :status => status}))
     end
-    albums
+    albums.sort { |a, b| a.name.downcase <=> b.name.downcase }
   end
 
   def save
@@ -52,7 +51,8 @@ class Album
   end
 
   def self.search_name(name)
-    @@albums.values().select { |album| /#{name}/i.match? album.name }
+    albums = self.all
+    albums.select { |album| /#{name}/i.match? album.name }
   end
 
   def update(name, year, genre, artist)
@@ -68,8 +68,8 @@ class Album
   end
 
   def sold()
-    self.status = false
-    @@sold_albums[self.id] = Album.new(self.name, self.id, self.year, self.genre, self.artist, self.status)
+    @status = false
+    DB.exec("UPDATE albums SET status = '#{@status}' WHERE id = #{id};")
   end
 
   def songs

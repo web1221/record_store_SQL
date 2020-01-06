@@ -66,7 +66,7 @@ post('/albums') do
   year = params[:album_year]
   genre = params[:album_genre]
   artist = params[:album_artist]
-  album = Album.new(name, nil, year, genre, artist, nil)
+  album = Album.new({:name => name, :id => nil, :year => year, :genre => genre, :artist => artist, :status => true})
   album.save()
   @albums = Album.all() # Adding this line will fix the error.
   erb(:albums)
