@@ -4,19 +4,19 @@ class Artist
 
   def initialize(attributes)
     @name = attributes.fetch(:name)
-    @album_name = attributes.fetch(:album_name)
+    # @album_name = attributes.fetch(:album_name)
     @id = attributes.fetch(:id).to_i
   end
 
   def self.all()
     returned_artist = DB.exec("SELECT * FROM artists;")
-    artist = []
+    artists = []
     returned_artist.each() do |artist|
       name = artist.fetch("name")
       id = artist.fetch("id").to_i
-      artist.push(Album.new({:name => name, :id => id}))
+      artists.push(Artist.new({:name => name, :id => id}))
     end
-    artist
+    artists
   end
 
   def save
@@ -67,6 +67,7 @@ class Artist
 end
 
   def delete()
+    DB.exec("DELETE FROM albums_artists WHERE artist_id = #{@id};")
     DB.exec("DELETE FROM artists WHERE id = #{@id};")
   end
 
