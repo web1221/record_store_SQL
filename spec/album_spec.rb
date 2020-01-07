@@ -16,7 +16,7 @@ describe '#Album' do
       album.save()
       album2 = Album.new({:name => "Blue", :id => nil, :year => 1990, :genre => "pop", :artist => "Aba", :status => true})
       album2.save()
-      expect(Album.all).to(eq([album, album2]))
+      expect(Album.all).to(eq([album2, album]))
     end
   end
 
@@ -100,5 +100,6 @@ describe '#Album' do
       expect(@album.songs).to(eq([song, song2]))
     end
   end
+
 
 end

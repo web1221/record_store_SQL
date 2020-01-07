@@ -2,7 +2,8 @@
 <h5>artist: <%= @album.artist %></h5>
 <p>genre: <%= @album.genre %></p>
 <p>year: <%= @album.year %></p>
-<p>status: <%= @album.status %></p>
+<p>status: <%= @album.status == true ? "Available" : "Sold" %></p>
+<p>cost: <%= @album.cost %></p>
 
 <h3>Album Songs</h3>
 

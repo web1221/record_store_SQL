@@ -49,6 +49,14 @@ end
 get('/albums') do
   if params["search"]
     @albums = Album.search_name(params[:search])
+  elsif params["alphabetize"]
+    @albums = Album.alphabetize
+  elsif params["sort_cost"]
+    @albums = Album.sort_cost
+  elsif params["sort_year"]
+    @albums = Album.sort_year
+  elsif params["random"]
+    @albums = Album.random
   else
     @albums = Album.all
   end
@@ -66,7 +74,8 @@ post('/albums') do
   year = params[:album_year]
   genre = params[:album_genre]
   artist = params[:album_artist]
-  album = Album.new({:name => name, :id => nil, :year => year, :genre => genre, :artist => artist, :status => true})
+  cost = params[:album_cost]
+  album = Album.new({:name => name, :id => nil, :year => year, :genre => genre, :artist => artist, :status => true, :cost => cost})
   album.save()
   @albums = Album.all() # Adding this line will fix the error.
   erb(:albums)
@@ -75,7 +84,11 @@ end
 # This route will show a specific album based on its ID. The value of ID here is #{params[:id]}.
 get('/albums/:id') do
   @album = Album.find(params[:id].to_i())
+  if @album == nil
+    erb(:go_back)
+  else
   erb(:album)
+end
 end
 
 # his will take us to a page with a form for updating an album with an ID of #{params[:id]}.
@@ -91,7 +104,7 @@ patch('/albums/:id') do
     @album.sold
   else
     @album = Album.find(params[:id].to_i())
-    @album.update(params[:name], params[:year], params[:genre], params[:artist])
+    @album.update(params[:name], params[:year], params[:genre], params[:artist], params[:cost])
   end
   @albums = Album.all
   erb(:albums)
