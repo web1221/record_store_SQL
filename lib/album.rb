@@ -60,7 +60,7 @@ class Album
   end
 
   def save
-    result = DB.exec("INSERT INTO albums (name, year, genre, artist, status) VALUES ('#{@name}', '#{@year}', '#{@genre}', '#{@artist}', '#{@status}') RETURNING id;")
+    result = DB.exec("INSERT INTO albums (name, year, genre, artist, status, cost) VALUES ('#{@name}', '#{@year}', '#{@genre}', '#{@artist}', '#{@status}', '#{@cost}') RETURNING id;")
     @id = result.first().fetch("id").to_i
   end
 
