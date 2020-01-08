@@ -1,0 +1,27 @@
+<!-- <h3><center>Album Search</center></h3> -->
+<!-- <form action="/artist">
+  <div class="form-group">
+    <!-- <input id="search" name="search" class="form-control bg-success" type="text"> -->
+  <!-- </div>
+  <button type="submit" class="btn btn-primary">Go!</button>
+</form>  -->
+
+<h3><center>Artist</center></h3>
+<% if @artists.any? %>
+<ul>
+  <% @artists.each do |artist| %>
+  <li><a href="/artists/<%= artist.id %>"><strong><%= artist.name %></a></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are currently no records to display.</p>
+<% end %>
+
+<a href="/artists/new">Add a new Artist</a>
+
+<!-- <form action="/artist" method="get"> -->
+  <!-- <button type="submit" name="alphabetize" class="btn btn-warning">Alphabetize!</button>
+  <button type="submit" name="sort_year" class="btn btn-warning">Sort by year!</button>
+  <button type="submit" name="sort_cost" class="btn btn-warning">Sort by cost!</button>
+  <button type="submit" name="random" class="btn btn-warning">Get a random album</button> -->
+<!-- </form> -->

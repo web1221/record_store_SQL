@@ -3,6 +3,7 @@ require('sinatra')
 require('sinatra/reloader')
 require('./lib/album')
 require('./lib/song')
+require('./lib/artist')
 require('pry')
 require('pg')
 also_reload('lib/**/*.rb')
@@ -116,4 +117,50 @@ delete('/albums/:id') do
   @album.delete()
   @albums = Album.all
   erb(:albums)
+end
+
+#This route will display a list of artists
+
+get('/artists')do
+  @artists = Artist.all()
+  erb(:artists)
+end
+
+#This route will display an individual artists details
+get('/artists/new') do
+  erb(:new_artist)
+end
+
+get('/artists/:id')do
+@artist = Artist.find(params[:id].to_i())
+erb(:artist)
+end
+
+
+#This route will add a new artist to a list of artists
+
+post('/artists')do
+  name = params[:artist_name]
+  artist = Artist.new({:name => name, :id => nil})
+  artist.save()
+  @artists = Artist.all()
+  erb(:artists)
+end
+
+#This route will allow you to update an artist
+patch('/artists/:id')do
+  @artist = Artist.find(params[:id].to_i())
+  @artist.update_name(params[:name])
+  @artists = Artist.all
+  erb(:artists)
+end
+
+#This route will allow you to delete an artist
+
+delete('/artists/:id')do
+  @artist = Artist.find(params[:id].to_i())
+  @artist.delete()
+  @artists = Artist.all
+  erb(:artists)
+
 end
